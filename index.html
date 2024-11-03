@@ -5,29 +5,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCANNER APP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        #reader {
+            margin: 20px auto;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #fff;
+        }
+        #show {
+            margin-top: 20px;
+            border: 1px solid #007BFF;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #e7f3ff;
+            display: none;
+        }
+        h4 {
+            margin: 0;
+        }
+        #result {
+            color: blue;
+            font-size: 1.5em;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
     <script src="./qrScript.js"></script>
     <div style="text-align: center;">
-
         <div id="reader" style="width: 500px;"></div>
-        <div id="show" style="display: none;">
+        <div id="show">
             <h4>Scanned Result</h4>
-            <p style="color: blue;" id="result"></p>
+            <p id="result"></p>
         </div>
     </div>
     <script>
         const html5Qrcode = new Html5Qrcode('reader');
-        const qrCodeSuccessCallback = (decodedText, decodedResult)=>{
-            if(decodedText){
-                document.getElementById('show').style.display = 'block';
+        const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+            if(decodedText) {
+                // Display the scanned result
                 document.getElementById('result').textContent = decodedText;
-                html5Qrcode.stop();
+                document.getElementById('show').style.display = 'block'; // Show the result section
+                html5Qrcode.stop(); // Stop scanning after first successful read
             }
-        }
-        const config = {fps:10, qrbox:{width:250, height:250}}
-        html5Qrcode.start({facingMode:"environment"}, config,qrCodeSuccessCallback );
+        };
+
+        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+        html5Qrcode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
     </script>
-    
 </body>
 </html>
